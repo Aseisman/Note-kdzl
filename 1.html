@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <input v-if="isFirst" type="button" value="点我点我" @click="run">
+        <input v-if="!isFirst" type="button" value="返回" @click="run">
+        <div v-show="isFirst">1111111</div>
+        <div v-show="!isFirst">222222222</div>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!',
+                isFirst: true,
+            },
+            mounted(){
+                window.addEventListener('popstate',this.oncloseTwo,false);
+                // if(window.history&&window.history.pushState){
+                //     history.pushState(null,null,document.URL);
+                //     window.addEventListener('popstate',this.oncloseTwo,false);
+                // }
+            },
+            methods: {
+                run() {
+                    if(this.isFirst){
+                        console.log('======');
+                        window.history.pushState({title:'toSec',url:null},'title',null);
+                        this.isFirst=false;
+                    }else{
+                        this.isFirst=true;
+                        window.history.back(-1); 
+                    }
+                },
+                oncloseTwo(){
+                    console.log('=======');
+                    if(!this.isFirst){
+                        this.isFirst=true;
+                    }else{
+                        console.log("sssss");   
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
